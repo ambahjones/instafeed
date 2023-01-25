@@ -11,7 +11,7 @@ export default function Feed (props: FeedProps) {
     const [feeds, setFeedsData] = useState([]);
     const token = process.env["REACT_APP_INSTA_ACCESS_TOKEN"]; 
     //const tokenProp = useRef(token);
-    console.log(token);
+
 
     useEffect(() => {
       // this is to avoid memory leaks
@@ -19,12 +19,12 @@ export default function Feed (props: FeedProps) {
 
       async function fetchInstagramPost() {
         try {
-          axios
+          await axios
             .get(
-              `https://graph.instagram.com/me/media?fields=id,media_type,media_url&access_token=${token}`
+              `https://graph.instagram.com/me/media?fields=id,media_type,media_url,caption&limit=${limit}&access_token=${token}`
             )
-            .then((resp) => {
-              setFeedsData(resp.data.data);
+            .then(res => {
+              setFeedsData(res.data.data);
             });
         } catch (err) {
           console.log("error", err);
@@ -39,11 +39,13 @@ export default function Feed (props: FeedProps) {
         abortController.abort();
       };
     }, [token, limit]);
+    console.log(feeds)
+
 
     return (
-      <div className="grid grid-cols-3 my-12">
-        {feeds.map((feed) => (
-          <Instafeed props={feed} />
+      <div className="grid grid-cols-3 m-12">
+        {feeds.map((feed, key) => (
+          <Instafeed key={key} props={feed} />
         ))}
       </div>
     );
