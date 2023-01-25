@@ -29,14 +29,6 @@ export function Instafeed(props: any) {
       post = (
         <img width="100%" height="auto" id={id} src={media_url} alt={caption} />
       );
-      //post = `${props.foo}`;
-    // post = ` <img
-    //       width="100%"
-    //       height="auto"
-    //       id={id}
-    //       src={permalink}
-    //       alt={caption}
-    //     />`;
   }
   return <div className="m-2 max-h-[25rem] overflow-hidden" key={key}>{post}</div>;
 }
